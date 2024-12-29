@@ -49,6 +49,11 @@
             bindings = <&mo 3>;
             key-positions = <3 4>;
         };
+
+        mo_func {
+            bindings = <&mo 4>;
+            key-positions = <33 36>;
+        };
     };
 
     macros {

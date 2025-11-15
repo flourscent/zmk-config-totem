@@ -7,7 +7,7 @@
 
         studio_unlock {
             bindings = <&studio_unlock>;
-            key-positions = <20 31>;
+            key-positions = <15 16 18 19>;
         };
     };
 

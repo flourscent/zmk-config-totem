@@ -21,22 +21,6 @@
         };
     };
 
-    combos {
-        compatible = "zmk-combos";
-        // J + L (오른쪽 검지+중지) = Enter
-        combo_enter {
-            timeout-ms = <50>;
-            key-positions = <16 17>; 
-            bindings = <&kp RET>;
-        };
-        // L + U (오른쪽 중지+약지) = BackSpace
-        combo_backspace {
-            timeout-ms = <50>;
-            key-positions = <17 18>;
-            bindings = <&kp BSPC>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 

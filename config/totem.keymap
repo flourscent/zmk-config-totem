@@ -1,4 +1,5 @@
 // 파일 최상단에 추가 (없다면)
+
 #define ZMK_POINTING_DEFAULT_MOVE_VAL 1500  // 기본 이동 속도
 #define ZMK_POINTING_DEFAULT_SCRL_VAL 20    // 기본 스크롤 속도
 
@@ -14,16 +15,15 @@
 #define FN    3
 #define MOUSE 4
 
-    &mmv {
-        time-to-max-speed-ms = <500>;       // 최대 속도 도달 시간
-        delay-ms = <0>;                     // 입력 지연
-    };
+&mmv {
+    time-to-max-speed-ms = <500>;       // 최대 속도 도달 시간
+    delay-ms = <0>;                     // 입력 지연
+};
 
-    &msc {
-        time-to-max-speed-ms = <300>;
-        delay-ms = <0>;
-    };
-
+&msc {
+    time-to-max-speed-ms = <300>;
+    delay-ms = <0>;
+};
 
 / {
     behaviors {
@@ -37,9 +37,6 @@
             bindings = <&kp>, <&kp>;
         };
     };
-
-
-
 
     combos {
         compatible = "zmk,combos";
@@ -110,7 +107,7 @@
         &trans  &trans  &trans  &trans  &trans    &kp K_VOL_UP  &trans          &trans          &trans        &trans
         &trans  &trans  &trans  &trans  &trans    &kp K_VOL_DN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT
 &trans  &trans  &trans  &trans  &trans  &trans    &kp K_PP      &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
-                        &trans  &trans  &trans    &trans        &trans          &trans
+                        &trans  &trans  &trans    &mkp LCLK     &mkp MCLK       &mkp RCLK
             >;
         };
     };

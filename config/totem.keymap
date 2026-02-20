@@ -14,18 +14,6 @@
 #define FN    3
 #define MOUSE 4
 
-/ {
-    behaviors {
-        hm: homerow_mods {
-            compatible = "zmk,behavior-hold-tap";
-            label = "HOMEROW_MODS";
-            #binding-cells = <2>;
-            tapping-term-ms = <200>;
-            quick-tap-ms = <175>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
-
     &mmv {
         acceleration-multiplier = <1>;      // 가속도 배율
         time-to-max-speed-ms = <500>;       // 최대 속도 도달 시간
@@ -37,7 +25,21 @@
         time-to-max-speed-ms = <300>;
         delay-ms = <0>;
     };
+
+
+/ {
+    behaviors {
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            label = "HOMEROW_MODS";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <175>;
+            flavor = "tap-preferred";
+            bindings = <&kp>, <&kp>;
+        };
     };
+
 
 
 

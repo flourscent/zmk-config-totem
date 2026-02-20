@@ -15,13 +15,11 @@
 #define MOUSE 4
 
     &mmv {
-        acceleration-multiplier = <1>;      // 가속도 배율
         time-to-max-speed-ms = <500>;       // 최대 속도 도달 시간
         delay-ms = <0>;                     // 입력 지연
     };
 
     &msc {
-        acceleration-multiplier = <1>;
         time-to-max-speed-ms = <300>;
         delay-ms = <0>;
     };

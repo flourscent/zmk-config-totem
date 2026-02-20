@@ -25,7 +25,6 @@
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-    };
 
     &mmv {
         acceleration-multiplier = <1>;      // 가속도 배율
@@ -38,6 +37,9 @@
         time-to-max-speed-ms = <300>;
         delay-ms = <0>;
     };
+    };
+
+
 
     combos {
         compatible = "zmk,combos";

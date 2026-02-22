@@ -1,3 +1,20 @@
+// 파일 최상단에 추가 (없다면)
+
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1500  // 기본 이동 속도
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 20    // 기본 스크롤 속도
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <dt-bindings/zmk/pointing.h>
+
+#define BASE  0
+#define NUM   1
+#define SYM   2
+#define FN    3
+#define MOUSE 4
+
 // ... (상단 #define 및 &mmv, &msc 설정은 동일)
 
 / {

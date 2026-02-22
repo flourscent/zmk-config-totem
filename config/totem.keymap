@@ -1,7 +1,6 @@
-// 파일 최상단에 추가 (없다면)
-
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 1500  // 기본 이동 속도
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 20    // 기본 스크롤 속도
+/* 핵심 설정: 마우스 기본 속도 조절 */
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1500 
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 20 
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
@@ -9,16 +8,28 @@
 #include <dt-bindings/zmk/outputs.h>
 #include <dt-bindings/zmk/pointing.h>
 
-#define BASE  0
-#define NUM   1
-#define SYM   2
-#define FN    3
-#define MOUSE 4
+/* 레이어 인덱스 정의 (이름 일치화) */
+#define BASE   0
+#define NUM    1
+#define SYM    2
+#define FN     3
+#define MOUSE  4
+#define SEBEOL 5
 
-// ... (상단 #define 및 &mmv, &msc 설정은 동일)
+/* 마우스 가속도 및 감도 설정 */
+&mmv {
+    time-to-max-speed-ms = <500>;
+    delay-ms = <0>;
+};
+
+&msc {
+    time-to-max-speed-ms = <300>;
+    delay-ms = <0>;
+};
 
 / {
     behaviors {
+        /* 홈로우 모디파이어 */
         hm: homerow_mods {
             compatible = "zmk,behavior-hold-tap";
             label = "HOMEROW_MODS";
@@ -33,21 +44,21 @@
     combos {
         compatible = "zmk,combos";
 
-        // Colemak-DH: N(16) + E(17) = ENTER
+        /* ENTER: N(16) + E(17) */
         cmb_enter {
             bindings = <&kp ENTER>;
             key-positions = <16 17>;
             timeout-ms = <50>;
         };
 
-        // Colemak-DH: E(17) + I(18) = BACKSPACE
+        /* BACKSPACE: E(17) + I(18) */
         cmb_bksp {
             bindings = <&kp BACKSPACE>;
             key-positions = <17 18>;
             timeout-ms = <50>;
         };
 
-        // Colemak-DH: N(16) + I(18) = ESC (새로 추가됨)
+        /* ESC: N(16) + I(18) */
         cmb_esc {
             bindings = <&kp ESC>;
             key-positions = <16 18>;
@@ -58,8 +69,9 @@
     keymap {
         compatible = "zmk,keymap";
 
+        /* 0: Colemak-DH (Base) */
         base_layer {
-            label = "Base";
+            label = "BASE";
             bindings = <
             &kp Q       &kp W       &kp F        &kp P        &kp B          &kp J        &kp L        &kp U        &kp Y       &kp SEMI
             &hm LGUI A  &hm LALT R  &hm LCTRL S  &hm LSHFT T  &kp G          &kp M        &hm RSHFT N  &hm RCTRL E  &hm LALT I  &hm RGUI O
@@ -68,10 +80,53 @@
             >;
         };
 
-        // ... (num, sym, fn, mouse_layer는 이전과 동일)
+        /* 1: Number & Navigation */
+        num_layer {
+            label = "NUM";
+            bindings = <
+        &kp N1    &kp N2    &kp N3     &kp N4     &kp N5    &kp N6    &kp N7     &kp N8   &kp N9     &kp N0
+        &kp LGUI  &kp LALT  &kp LCTRL  &kp LSHFT  &none     &kp LEFT  &kp DOWN   &kp UP   &kp RIGHT  &kp PG_UP
+&trans  &none     &none     &none      &none      &none     &kp HOME  &kp PG_DN  &kp END  &none      &none      &trans
+                            &trans     &trans     &trans    &trans    &trans     &trans
+            >;
+        };
 
+        /* 2: Symbols */
+        sym_layer {
+            label = "SYM";
+            bindings = <
+        &kp EXCL   &kp AT      &kp HASH  &kp DLLR  &kp PRCNT    &kp CARET  &kp AMPS   &kp ASTRK  &kp MINUS  &kp EQUAL
+        &kp GRAVE  &kp TILDE  &none      &none     &none        &kp LBRC   &kp LPAR   &kp RPAR   &kp RBRC   &kp BSLH
+&trans  &none      &none      &none      &none     &none        &kp LBKT   &kp UNDER  &kp PLUS   &kp RBKT   &kp PIPE   &kp GRAVE
+                              &trans     &trans    &trans       &trans     &trans     &trans
+            >;
+        };
+
+        /* 3: System Management */
+        fn_layer {
+            label = "FN";
+            bindings = <
+        &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3  &bt BT_SEL 4    &kp F6   &kp F7   &kp F8   &kp F9   &kp F10
+        &bt BT_CLR    &none         &none         &none         &none           &kp F11  &kp F12  &none    &none    &bt BT_CLR_ALL
+&trans  &out OUT_BLE  &out OUT_USB  &none         &none         &none           &none    &none    &none    &none    &none       &bootloader
+                                    &trans        &trans        &trans          &trans   &trans   &trans
+            >;
+        };
+
+        /* 4: Mouse Mode */
+        mouse_layer {
+            label = "MOUSE";
+            bindings = <
+        &trans  &trans  &trans  &trans  &trans    &kp K_VOL_UP  &trans          &trans          &trans        &trans
+        &trans  &trans  &trans  &trans  &trans    &kp K_VOL_DN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT
+&trans  &trans  &trans  &trans  &trans  &trans    &kp K_PP      &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
+                        &trans  &trans  &trans    &mkp LCLK     &mkp MCLK       &mkp RCLK
+            >;
+        };
+
+        /* 5: Sebeolshik Support (Qwerty-based) */
         sebeol_layer {
-            label = "3BEOL";
+            label = "SEBEOL";
             bindings = <
             &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I  &kp O  &kp P
             &kp A  &kp S  &kp D  &kp F  &kp G      &kp H  &kp J  &kp K  &kp L  &kp SEMI

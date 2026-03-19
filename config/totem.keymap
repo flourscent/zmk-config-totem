@@ -31,7 +31,6 @@
 / {
     chosen {
         // 1번 레이어(Colemak-DH)를 기본으로 설정
-        zmk,physical-layout = &default_layout;
         zmk,keymap_default_nodes = <&base_layer>;
     };
 

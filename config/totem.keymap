@@ -30,8 +30,9 @@
 
 / {
     chosen {
-        // 1번 레이어(Colemak-DH)를 기본으로 설정
-        zmk,matrix_transform = &default_transform;
+// 1번 레이어(Colemak-DH)를 기본으로 설정
+        zmk,physical-layout = &totem_layout; // 실드에 따라 다를 수 있음
+        zmk,keymap_default_nodes = <&base_layer>; // 레이어에 라벨이 있을 경우
     };
 
     behaviors {

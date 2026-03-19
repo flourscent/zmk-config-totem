@@ -9,12 +9,13 @@
 #include <dt-bindings/zmk/pointing.h>
 
 /* 레이어 인덱스 정의 (이름 일치화) */
-#define BASE   0
-#define NUM    1
-#define SYM    2
-#define FN     3
-#define MOUSE  4
-#define SEBEOL 5
+#define SEBEOL 0
+#define BASE   1
+#define NUM    2
+#define SYM    3
+#define FN     4
+#define MOUSE  5
+
 
 /* 마우스 가속도 및 감도 설정 */
 &mmv {
@@ -28,6 +29,12 @@
 };
 
 / {
+    chosen {
+        // 1번 레이어(Colemak-DH)를 기본으로 설정
+        zmk,physical-layout = &default_layout;
+        zmk,keymap_default_nodes = <&base_layer>;
+    };
+
     behaviors {
         /* 홈로우 모디파이어 */
         hm: homerow_mods {
@@ -69,18 +76,29 @@
     keymap {
         compatible = "zmk,keymap";
 
-        /* 0: Colemak-DH (Base) */
+        /* 0: Sebeolshik Support (Qwerty-based) */
+        sebeol_layer {
+            label = "SEBEOL";
+            bindings = <
+            &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I  &kp O  &kp P
+            &hm LGUI A  &hm LALT S  &hm LCTRL D  &hm LSHFT F  &kp G          &kp H        &hm RSHFT J  &hm RCTRL K  &hm LALT L  &hm RGUI SEMI
+&tog BASE &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &trans
+                          &trans &trans &trans     &trans &trans &trans
+            >;
+        };
+
+        /* 1: Colemak-DH (Base) */
         base_layer {
             label = "BASE";
             bindings = <
             &kp Q       &kp W       &kp F        &kp P        &kp B          &kp J        &kp L        &kp U        &kp Y       &kp SEMI
             &hm LGUI A  &hm LALT R  &hm LCTRL S  &hm LSHFT T  &kp G          &kp M        &hm RSHFT N  &hm RCTRL E  &hm LALT I  &hm RGUI O
-&tog SEBEOL &kp Z       &kp X       &kp C        &kp D        &kp V          &kp K        &kp H        &kp COMMA    &kp DOT     &kp FSLH    &kp SQT
+&tog BASE &kp Z       &kp X       &kp C        &kp D        &kp V          &kp K        &kp H        &kp COMMA    &kp DOT     &kp FSLH    &kp SQT
                                     &mo MOUSE    &lt NUM RET  &lt FN TAB    &kp SPACE    &lt SYM BSPC  &kp DEL
             >;
         };
 
-        /* 1: Number & Navigation */
+        /* 2: Number & Navigation */
         num_layer {
             label = "NUM";
             bindings = <
@@ -91,7 +109,7 @@
             >;
         };
 
-        /* 2: Symbols */
+        /* 3: Symbols */
         sym_layer {
             label = "SYM";
             bindings = <
@@ -102,7 +120,7 @@
             >;
         };
 
-        /* 3: System Management */
+        /* 4: System Management */
         fn_layer {
             label = "FN";
             bindings = <
@@ -113,7 +131,7 @@
             >;
         };
 
-        /* 4: Mouse Mode */
+        /* 5: Mouse Mode */
         mouse_layer {
             label = "MOUSE";
             bindings = <
@@ -121,17 +139,6 @@
         &trans  &trans  &trans  &trans  &trans    &kp K_VOL_DN  &mmv MOVE_LEFT  &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT
 &trans  &trans  &trans  &trans  &trans  &trans    &kp K_PP      &msc SCRL_LEFT  &msc SCRL_DOWN  &msc SCRL_UP  &msc SCRL_RIGHT  &trans
                         &trans  &trans  &trans    &mkp LCLK     &mkp MCLK       &mkp RCLK
-            >;
-        };
-
-        /* 5: Sebeolshik Support (Qwerty-based) */
-        sebeol_layer {
-            label = "SEBEOL";
-            bindings = <
-            &kp Q  &kp W  &kp E  &kp R  &kp T      &kp Y  &kp U  &kp I  &kp O  &kp P
-            &hm LGUI A  &hm LALT S  &hm LCTRL D  &hm LSHFT F  &kp G          &kp H        &hm RSHFT J  &hm RCTRL K  &hm LALT L  &hm RGUI SEMI
-&tog SEBEOL &kp Z  &kp X  &kp C  &kp V  &kp B      &kp N  &kp M  &kp COMMA &kp DOT &kp FSLH &trans
-                          &trans &trans &trans     &trans &trans &trans
             >;
         };
     };
